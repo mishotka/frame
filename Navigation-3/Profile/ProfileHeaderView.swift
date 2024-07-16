@@ -37,9 +37,17 @@ class ProfileHeaderView: UIView {
     let statusTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.backgroundColor = UIColor.white.cgColor
         textField.layer.borderWidth = 1
-        textField.layer.cornerRadius = 8
+        textField.font = UIFont.systemFont(ofSize: 15)
+        textField.textColor = .black
+        textField.layer.cornerRadius = 12
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        
         return textField
     }()
 
@@ -55,6 +63,9 @@ class ProfileHeaderView: UIView {
         button.layer.shadowRadius = 4
         button.layer.shadowOpacity = 0.7
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.clipsToBounds = true
+        button.layer.masksToBounds = false
+        button.layer.cornerRadius = 4
         return button
     }()
 
@@ -93,14 +104,16 @@ class ProfileHeaderView: UIView {
             subtitleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
             subtitleLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: 140),
             subtitleLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            subtitleLabel.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -34),
+            subtitleLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -10),
             
-            statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            statusTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 4),
             statusTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: 140),
-            statusTextField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            statusTextField.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -34),
+            statusTextField.trailingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor),
+            statusTextField.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -10),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
-            addButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            addButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 33),
             addButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             addButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             addButton.heightAnchor.constraint(equalToConstant: 50)
@@ -108,16 +121,15 @@ class ProfileHeaderView: UIView {
     }
 
     @objc func statusTextChanged(_ textField: UITextField) {
-            statusText = textField.text ?? ""
-        }
+        statusText = textField.text ?? ""
+    }
 
-        @objc func buttonPressed() {
-            if let statusText = statusTextField.text, !statusText.isEmpty {
-                subtitleLabel.text = statusText
-                statusTextField.text = ""
-                } else {
-                    subtitleLabel.text = "Whiting for something..."
-                }
-            }
+    @objc func buttonPressed() {
+        if let statusText = statusTextField.text, !statusText.isEmpty {
+            subtitleLabel.text = statusText
+            statusTextField.text = ""
+        } else {
+            subtitleLabel.text = "Whiting for something..."
         }
-
+    }
+}
