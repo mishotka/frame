@@ -20,17 +20,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         feedViewController.title = "News"
         feedViewController.view.backgroundColor = .white
         
-        
-        let profileViewController = ProfileViewController()
-        profileViewController.title = "Profile"
-        profileViewController.view.backgroundColor = .white
+        let loginViewController = LogInViewController()
+//        let profileViewController = ProfileViewController()
+        loginViewController.title = "Profile"
+        loginViewController.view.backgroundColor = .white
 
         let tabBarController = UITabBarController()
 
         feedViewController.tabBarItem = UITabBarItem(title: "News", image: .news, tag: 0)
-        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: .profil, tag: 1)
+        loginViewController.tabBarItem = UITabBarItem(title: "Profile", image: .profil, tag: 1)
 
-        let controllers = [feedViewController, profileViewController]
+        let controllers = [feedViewController, loginViewController]
         tabBarController.viewControllers = controllers.map { UINavigationController(rootViewController: $0) }
         tabBarController.selectedIndex = 1
         
